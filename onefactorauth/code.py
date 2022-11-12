@@ -61,7 +61,7 @@ def __parse_passcode(html: str, passcode_pattern: re.Pattern) -> Optional[Passco
     if not passcodes:
         return
     timestamp = __parse_passcode_timestamp(html, passcodes[0])
-    if not timestamp:
+    if timestamp is None:
         return
     return Passcode(code=passcodes[0], time=timestamp)
 
