@@ -2,18 +2,22 @@ import re
 import sys
 from typing import Optional
 
+import clipboard as clip
 import requests
 
 from onefactorauth.config import get_config
 
 
-def dump_passcode(timeout=10) -> int:
+def dump_passcode(timeout=10, clipboard=False) -> int:
     passcode = get_passcode(timeout)
     if passcode is None:
         print("Err: no passcode found", file=sys.stderr)
         return 1
 
     print(passcode)
+    if clipboard:
+        clip.copy(passcode)
+
     return 0
 
 

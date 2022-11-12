@@ -13,11 +13,17 @@ def main():
     config_parser.add_argument(
         "-p",
         "--phone",
-        help="Phone number to use from https://receivesms.cc/sms/",
+        help="phone number to use from https://receivesms.cc/sms/",
         type=str,
     )
 
     code_parser = commands.add_parser("code", description="Get 1fa code")
+    code_parser.add_argument(
+        "-c", "--clipboard", help="copy to clipboard", action="store_true"
+    )
+    code_parser.add_argument(
+        "-t", "--timeout", help="timeout (s)", type=int, default=10
+    )
 
     args = parser.parse_args()
 
@@ -27,7 +33,7 @@ def main():
         return configure(args.phone)
 
     if args.command == "code":
-        return dump_passcode()
+        return dump_passcode(args.timeout, args.clipboard)
 
     print(
         "Err: Please provide a subcommand to run, run --help for more info",
