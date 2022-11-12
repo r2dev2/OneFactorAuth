@@ -2,6 +2,8 @@
 
 A tool to bypass 2 factor authentication.
 
+<video src="https://user-images.githubusercontent.com/50760816/201490117-ea6d9cd7-5e4a-47f9-a2ad-d8d8ebd74fc8.mp4"></video>
+
 ## Usage
 
 ### Installation
@@ -13,7 +15,7 @@ python3 -m pip install onefactorauth
 ### Setup
 
 1. Go to https://receivesms.cc/sms/ and choose a phone number
-2. Run `1fa config -p <phone_number>` (ex: `1fa config -p <31616099881>`)
+2. Run `1fa config -p <phone_number>` (ex: `1fa config -p 31616099881`)
 3. Register the phone number under your account for 2 factor authentication
 4. Go to https://receivesms.cc/sms/<phone_number> (ex: `https://receivesms.cc/sms/31616099881`) to see the text message
 5. Complete the setup of this phone number in your account settings
@@ -48,6 +50,7 @@ options:
     * windows: use [winhotkey](https://directedge.us/content/winhotkey/)
     * macos: [automator or icanhazshortcut](https://www.howtogeek.com/286332/how-to-run-any-mac-terminal-command-with-a-keyboard-shortcut/)
     * linux: depends on your desktop environment, there's something in the built in settings for gnome and xfce
+      * my binding: `super+u`: `1fa code --timeout=3 --clipboard && notify-send -i system-lock-screen -t 1 'UCLA Duo' 'Copied!' || notify-send -i system-lock-screen -t 1 'UCLA Duo' 'Oopsie woopsie'`
 
 ## How
 
