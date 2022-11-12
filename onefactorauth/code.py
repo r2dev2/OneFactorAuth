@@ -1,5 +1,6 @@
 import re
 import sys
+import time
 from typing import Optional
 
 import clipboard as clip
@@ -22,6 +23,7 @@ def dump_passcode(timeout=10, clipboard=False) -> int:
 
 
 def get_passcode(timeout=10) -> Optional[str]:
+    start = time.time()
     conf = get_config()
 
     if conf is None:
@@ -32,8 +34,11 @@ def get_passcode(timeout=10) -> Optional[str]:
     # it needs to first set some cookies before we get latest sms
     s.get(__get_sms_url(conf.phone))
 
-    r = s.get(__get_sms_url(conf.phone))
-    return __parse_passcode(r.text, re.compile(r"SMS p\*\*\*codes: (\d+)"))
+    while time.time() - start <= timeout:
+        r = s.get(__get_sms_url(conf.phone))
+        code = __parse_passcode(r.text, re.compile(r"SMS p\*\*\*codes: (\d+)"))
+        if code is not None:
+            return code
 
 
 def __parse_passcode(html: str, passcode_pattern: re.Pattern) -> Optional[str]:
