@@ -40,7 +40,12 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
-    entry_points={"console_scripts": ["onefactorauth=onefactorauth:main", "1fa=onefactorauth:main"]},
+    entry_points={
+        "console_scripts": [
+            "onefactorauth=onefactorauth:main",
+            "1fa=onefactorauth:main",
+        ]
+    },
     python_requires=">=3.5",
     install_requires=requirements,
 )
