@@ -45,7 +45,7 @@ options:
     * ex: messages are like `SMS p***codes: 93209`
         * pattern of `SMS p\*\*\*codes: (\d+)`
     * ex: messages are like `Your Uber code is 43890`
-        * pattern of `Uber code is (\d+)` (partial matches are acceptable
+        * pattern of `Uber code is (\d+)` (partial matches are acceptable)
 * bind `1fa code --pattern='code is (\d+)' --clipboard` to a keybind
     * windows: use [winhotkey](https://directedge.us/content/winhotkey/)
     * macos: [automator or icanhazshortcut](https://www.howtogeek.com/286332/how-to-run-any-mac-terminal-command-with-a-keyboard-shortcut/)
