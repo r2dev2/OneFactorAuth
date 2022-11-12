@@ -1,3 +1,4 @@
+import re
 import sys
 from argparse import ArgumentParser
 
@@ -24,6 +25,13 @@ def main():
     code_parser.add_argument(
         "-t", "--timeout", help="timeout (s)", type=int, default=10
     )
+    code_parser.add_argument(
+        "-p",
+        "--pattern",
+        help="regex pattern for passcode",
+        type=re.compile,
+        default=re.compile("SMS p\*\*\*codes: (\d+)"),  # pattern for UCLA duo
+    )
 
     args = parser.parse_args()
 
@@ -33,7 +41,7 @@ def main():
         return configure(args.phone)
 
     if args.command == "code":
-        return dump_passcode(args.timeout, args.clipboard)
+        return dump_passcode(args.pattern, args.timeout, args.clipboard)
 
     print(
         "Err: Please provide a subcommand to run, run --help for more info",

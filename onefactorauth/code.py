@@ -9,8 +9,8 @@ import requests
 from onefactorauth.config import get_config
 
 
-def dump_passcode(timeout=10, clipboard=False) -> int:
-    passcode = get_passcode(timeout)
+def dump_passcode(pattern: re.Pattern, timeout: int, clipboard: bool) -> int:
+    passcode = get_passcode(pattern, timeout)
     if passcode is None:
         print("Err: no passcode found", file=sys.stderr)
         return 1
@@ -22,7 +22,7 @@ def dump_passcode(timeout=10, clipboard=False) -> int:
     return 0
 
 
-def get_passcode(timeout=10) -> Optional[str]:
+def get_passcode(pattern: re.Pattern, timeout: int) -> Optional[str]:
     start = time.time()
     conf = get_config()
 
@@ -36,7 +36,7 @@ def get_passcode(timeout=10) -> Optional[str]:
 
     while time.time() - start <= timeout:
         r = s.get(__get_sms_url(conf.phone))
-        code = __parse_passcode(r.text, re.compile(r"SMS p\*\*\*codes: (\d+)"))
+        code = __parse_passcode(r.text, pattern)
         if code is not None:
             return code
 
