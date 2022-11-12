@@ -2,7 +2,7 @@ import re
 import sys
 from argparse import ArgumentParser
 
-from onefactorauth.code import dump_passcode
+from onefactorauth.code import ParseConf, dump_passcode
 from onefactorauth.config import configure, dump_config
 
 
@@ -32,6 +32,13 @@ def main():
         type=re.compile,
         default=re.compile("SMS p\*\*\*codes: (\d+)"),  # pattern for UCLA duo
     )
+    code_parser.add_argument(
+        "-m",
+        "--max-time",
+        help="maximum age of the sms code msg (min)",
+        type=int,
+        default=2,
+    )
 
     args = parser.parse_args()
 
@@ -41,7 +48,12 @@ def main():
         return configure(args.phone)
 
     if args.command == "code":
-        return dump_passcode(args.pattern, args.timeout, args.clipboard)
+        return dump_passcode(
+            ParseConf(
+                **{k: v for k, v in args.__dict__.items() if k in ParseConf._fields}
+            ),
+            args.clipboard,
+        )
 
     print(
         "Err: Please provide a subcommand to run, run --help for more info",
