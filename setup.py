@@ -37,7 +37,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "License :: Public Domain",
         "Operating System :: OS Independent",
     ],
     entry_points={
